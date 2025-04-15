@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Аутентификация завершена</title>
+</head>
+<div></div>
+
+<body>
+    <script>
+        if (window.opener)
+        {
+            window.opener.postMessage({ auth: '<%= auth %>' }, window.location.origin);
+        }
+        window.close();
+    </script>
+</body>
+
+</html>
