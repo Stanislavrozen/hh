@@ -1,0 +1,20 @@
+.main {
+    display: flex;
+    padding-top: 24px;
+    align-content: flex-start;
+}
+
+.left-pane {
+    width: 300px;
+}
+
+.content-area {
+    display: flex;
+}
+/* .items-block {
+    display: flex;
+    flex-wrap: wrap;
+    height: auto;
+    padding-top: 24px;
+    align-content: flex-start;
+} */

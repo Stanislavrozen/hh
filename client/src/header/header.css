@@ -1,0 +1,212 @@
+.header * {
+    width: auto;
+    height: auto;
+}
+
+.header {
+    overflow: hidden;
+    display: flex;
+    position: relative;
+    width: auto;
+    flex-direction: column;
+    transition: all .5s linear;
+    justify-content: flex-start;
+    height: 102px;
+}
+
+.header.show {
+    height: 158px;
+    transition: height .1s linear;
+
+}
+
+.header-main {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    z-index: 10;
+    background-color: white;
+}
+
+.header-main .logo {
+    min-width: 102px;
+    height: 102px;
+    margin-left: 24px;
+    cursor: pointer;
+    background-image: url("../img/round_puss_logo.png")
+}
+
+
+.header-main .count {
+    height: auto;
+    padding: 0 25px;
+    font-size: 22px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    white-space: nowrap;
+    width: 100%;
+    justify-content: flex-start;
+    font-family: "hh sans", "Helvetica Neue", sans-serif;
+}
+
+.header-controls {
+    display: flex;
+    align-items: center;
+    width: 250px;
+    justify-content: flex-end;
+}
+
+.header-controls button {
+    font-family: "hh sans", "Helvetica Neue", sans-serif;
+    gap:8px;
+    font-size: 16px;
+    font-weight: 400;
+    box-sizing: border-box;
+    color: #b9b9b9;
+    stroke: #b9b9b9; 
+    border: none;
+    outline: none;
+    background-position: center center;
+    background-repeat: no-repeat;
+    display: flex;
+    min-width: 50px;
+    width: auto;
+    align-items: center;
+    min-height: 50px;
+    height: auto;
+    cursor: pointer;
+    background-color: transparent;
+    fill: transparent;
+    margin-right: 25px;
+}
+.header-controls button:hover {
+    color: black;
+    stroke: black;
+}
+/* 1. по‑умолчанию точку скрываем */
+.user .status {
+    display: none;
+  }
+  
+  /* 2. у .authorized показываем */
+  .user.authorized .status {
+    display: block;
+  }
+.search {
+    background-color: white;
+    opacity: 0;
+    transition: opacity .1s linear;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: -10;
+}
+
+.search.show {
+    opacity: 1;
+    transition: opacity .4s linear;
+    display: block;
+    position: relative;
+    z-index: 10;
+}
+
+.searchline {
+    display: flex;
+    align-items: center;
+    font-family: "hh sans", "Helvetica Neue", sans-serif;
+    font-size: 22px;
+    height: 56px;
+    background-color: rgba(255, 255, 255, 0.9);
+    /* box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px; */
+    border-radius: 12px;
+    padding: 5px;
+    opacity: 0.9;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.searchline input {
+    height: 48px;
+    min-width: 350px;
+    width: 100%;
+    padding: 12px 4px 12px 48px;
+    line-height: 24px;
+    font-size: 16px;
+    border-radius: 12px;
+    box-shadow: inset 0 0 0 1px #dce3eb;
+    border: none;
+    box-sizing: border-box;
+}
+
+.searchline input:hover {
+    box-shadow: inset 0 0 0 1px#ccd5df;
+}
+
+.searchline input:focus {
+    box-shadow: inset 0 0 0 1px#ccd5df;
+    border: none;
+    outline: none;
+}
+
+.searchline .input-block {
+    display: flex;
+    align-items: center;
+    position: relative;
+    min-width: 80%;
+}
+
+.input-block svg {
+    width: 24px;
+    height: 24px;
+    left: 12px;
+    position: absolute;
+    stroke: #ccd5df;
+}
+
+.input-block:focus svg {
+    stroke: black;
+}
+
+.input-block button {
+    margin-left: 12px;
+    min-width: 80px;
+    max-width: 212px;
+    width: 100%;
+    height: 48px;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: "hh sans", "Helvetica Neue", sans-serif;
+    background-color: #0070ff;
+    border-radius: 12px;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+@media only screen and (max-width:790px) {
+    .searchline {
+        display: flex;
+        height: auto;
+        width: auto;
+    }
+
+    .searchline .count {
+        height: auto;
+        min-width: 250px;
+        padding: 25px 25px;
+        font-size: 20px;
+        font-weight: 500;
+        max-width: 300px;
+        width: 100%;
+        white-space: nowrap;
+        text-align: left;
+    }
+}
+
+.searchline img {
+    width: auto;
+    height: auto;
+}
