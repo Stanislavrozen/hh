@@ -43,8 +43,9 @@ function App()
 
             if (!line.trim()) continue
             const json = JSON.parse(line)
-            console.log(json.length != undefined)
-            console.log(json)
+
+            json.found ? setVacancies(json) : setVacancies(prev => ({ ...prev, items: [...prev.items, ...json] }))
+
           } catch (err)
           {
             console.log(err)

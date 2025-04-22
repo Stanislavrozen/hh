@@ -51,6 +51,7 @@ class ApiController
     {
         const text = req.query['text']
         let vacanciesData;
+        const concurency = 4;
 
         if (!text)
         {
@@ -76,11 +77,18 @@ class ApiController
                 const searchParams = new URLSearchParams({ clusters: false, per_page: 100, text }).toString()
                 const urls = new Array(pageCount - 1).fill(methodUrl + searchParams).map((url, idx) => `${url}&page=${idx + 1}`)
 
-                for (let i = 0; i < urls.length; i++)
+                for (let i = 0; i < urls.length; i += concurency)
                 {
-                    const { items } = await getVacanciesPage(urls[i], headers)
+                    const batchItems = []
+                    const batch = urls.slice(i, i + concurency)
+                    const result = await Promise.all(
+
+                        batch.map(url => getVacanciesPage(url, headers))
+                    )
+                    console.log(result)
+                    batchItems.push(...result.map(r => JSON.stringify(r.items) + '\n' ))
                     // vacanciesData.items.push(...items)
-                    res.write(JSON.stringify(items) + '\n')
+                    res.write(batchItems.join(''))
                 }
             }
 
