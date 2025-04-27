@@ -4,6 +4,7 @@ const cors = require('cors')
 const sequelize = require('./db')
 const session = require('express-session')
 const path = require('path')
+const { SearchLog, User, Vacancy, Employer, Area } = require('./models');
 
 const server = express()
 
@@ -23,9 +24,8 @@ server.use(session({
 }));
 
 const staticPath = path.join(__dirname, '../client/build');
-console.log(staticPath)
-server.use(express.static(staticPath));
 
+server.use(express.static(staticPath));
 server.use('/', require('./routes/index.js'))
 
 // server.get('*', (req, res) => {
@@ -39,7 +39,8 @@ const start = async (port) =>
     try
     {
         await sequelize.authenticate()
-        await sequelize.sync()
+        // await sequelize.sync();
+        await SearchLog.sync();
 
         server.listen(port, () => console.log(`Нам очень хорошо с тобой на порту ${port}`))
     }

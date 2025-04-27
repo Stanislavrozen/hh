@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react'
 
 const Item = ({ count, item, selectVacancy }) =>
 {
-    const bg = item.employer.logo_urls ? { backgroundImage: `url(${item.employer.logo_urls[240]})` } : {};
+    const bg = item.employer?.logo_urls ? { backgroundImage: `url(${item.employer.logo_urls[240]})` } : {};
     const requirement = useRef(null)
     const responsibility = useRef(null)
 

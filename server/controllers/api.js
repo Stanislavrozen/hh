@@ -71,6 +71,7 @@ class ApiController
             res.write(JSON.stringify(vacanciesData) + '\n')
 
             const pageCount = vacanciesData.pages
+            const clusteredUrls = getClusteredUrls(methodUrl, text, headers, vacanciesData)
 
             if (pageCount > 1)
             {
@@ -85,8 +86,7 @@ class ApiController
 
                         batch.map(url => getVacanciesPage(url, headers))
                     )
-                    console.log(result)
-                    batchItems.push(...result.map(r => JSON.stringify(r.items) + '\n' ))
+                    batchItems.push(...result.map(r => JSON.stringify(r.items) + '\n'))
                     // vacanciesData.items.push(...items)
                     res.write(batchItems.join(''))
                 }
@@ -110,6 +110,10 @@ async function getVacanciesPage(url, headers)
     }
 
     return result.json()
+}
+async function getClusteredUrls(methodUrl, text, headers, vacanciesData)
+{
+    const clusters = vacanciesData.clusters
 }
 
 module.exports = new ApiController

@@ -1,12 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './list.css'
 import Item from './item'
-import VacancyEntities from '../vacancyEntities/vacancyEntities'
 
-const List = ({ vacancies, setVacancies }) =>
+const List = ({ vacancies }) =>
 {
     const [selectedVacancy, setSelectedVacancy] = useState(null)
-
+    
     useEffect(() =>
     {
         // const elem = document.querySelector(".items-block")

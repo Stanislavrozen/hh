@@ -3,71 +3,19 @@ import Header from "./header/header";
 import List from "./vacancyList/list";
 import { begSource, begStream } from "./begSource";
 import VacancyEntities from "./vacancyEntities/vacancyEntities";
+import Menu from "./menu/menu";
+import { getVacancies } from "./getVacancies";
+import { useVacancies } from "./hooks/useVacancies";
 
 function App()
 {
   const apiBaseUrl = 'https://hh.rozen.pro/api'
-  const [grabbed, setGrabbed] = useState([]);
+  const [searchText, setSearchText] = useState('javascript');
   const [user, setUser] = useState(null)
-  const [vacancies, setVacancies] = useState({})
   const [negotiations, setNegotiations] = useState([])
   const [selectedVacancy, setSelectedVacancy] = useState(null)
-
-  async function getVacancies(text)
-  {
-    const url = `${apiBaseUrl}/getAllVacancies/?text=${text}`
-
-    const vacanciesResponse = await begStream(url)
-    const reader = vacanciesResponse.body.getReader()
-    const decoder = new TextDecoder()
-
-    let buffer = '';
-    let done = false
-
-    while (!done)
-    {
-      const chunk = await reader.read()
-      done = chunk.done
-
-      if (chunk.value)
-      {
-        buffer += decoder.decode(chunk.value, { stream: true })
-
-        const lines = buffer.split('\n');
-        buffer = lines.pop()
-
-        for (const line of lines)
-        {
-          try
-          {
-
-            if (!line.trim()) continue
-            const json = JSON.parse(line)
-
-            json.found ? setVacancies(json) : setVacancies(prev => ({ ...prev, items: [...prev.items, ...json] }))
-
-          } catch (err)
-          {
-            console.log(err)
-          }
-        }
-
-      }
-    }
-    if (buffer.trim())
-    {
-      try
-      {
-        const json = JSON.parse(buffer);
-        console.log(typeof json);
-        console.log(json);
-      } catch (err)
-      {
-        console.warn('Не удалось распарсить финальный кусок:', buffer, err);
-      }
-    }
-
-  }
+  
+  const { vacancies, loading, error } = useVacancies(searchText);
 
   async function getNegotiations(user)
   {
@@ -100,7 +48,6 @@ function App()
 
   useEffect(() =>
   {
-    // Функция-обработчик для события "message"
     const handleMessage = (event) =>
     {
       if (event.origin !== window.location.origin || event.source.name !== 'oauth') return;
@@ -117,7 +64,6 @@ function App()
       getUser();
     }
 
-    getVacancies("javascript")
 
     return () =>
     {
@@ -134,7 +80,8 @@ function App()
 
   return (
     <div className="App">
-      <Header grabbed={grabbed} vacancies={vacancies} getVacancies={getVacancies} user={user} />
+      <Header vacancies={vacancies} user={user} initialSearchText={searchText} setSearchText={setSearchText} />
+      <Menu />
       {
         <div className='main'>
           <div className="left-pane"></div>
@@ -143,7 +90,7 @@ function App()
             </div> */}
             {/* {<Aside data={data} setData={setData} token={token} />} */}
             {
-              vacancies.items?.length ? <List vacancies={vacancies} getVacancies={getVacancies} selectVacancy={selectVacancy} /> : null
+              vacancies.items?.length ? <List vacancies={vacancies}  /> : null
             }
           </div>
         </div>

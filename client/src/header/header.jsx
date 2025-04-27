@@ -1,33 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import './header.css'
 
-const Header = ({ vacancies, grabbed, getVacancies, user }) =>
+const Header = ({ vacancies, initialSearchText, user, setSearchText }) =>
 {
-    const [total, setTotal] = useState('')
-    const [text, setText] = useState("")
+    const [userInput, setUserInput] = useState(initialSearchText)
     const [show, setShow] = useState(false)
     const headerClass = show ? 'header show' : 'header';
     const searchClass = show ? 'search show' : 'search';
-    const apiBaseUrl = 'https://hh.rozen.pro/api'
 
     function switchShow()
     {
         setShow(show ? false : true)
     }
 
-    // useEffect(() =>
-    // {
-    //     if (!vacancies.length)
-    //     {
-    //         getVacancies('javascript')
-    //     }
-    // }, [])
-
     function startAuth()
     {
         window.open(`https://hh.rozen.pro/oauth/start/`, 'oauth', "width=500,height=600,top=50,left=50,toolbar=no,menubar=0,location=0,status=0,scrollbars=0")
     }
-
 
     return (
         <div className={headerClass}>
@@ -36,7 +25,7 @@ const Header = ({ vacancies, grabbed, getVacancies, user }) =>
                 </div>
                 <div className='count'>
                     {
-                        vacancies.items?.length ? vacancies.items.length + "/" + vacancies.found : <span className='totlal-vacancies'>{total}</span>
+                        vacancies.items.length ? vacancies.items.length + "/" + vacancies.found : null
                     }
                 </div>
                 <div className='header-controls'>
@@ -60,10 +49,10 @@ const Header = ({ vacancies, grabbed, getVacancies, user }) =>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false"><path d="M21 21L16.65 16.65M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z" stroke="#6a7885" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path></svg>
                         <input autoFocus onKeyDown={e => 
                         {
-                            e.code == "Enter" && getVacancies(text)
+                            e.code == "Enter" && setSearchText(userInput)
                         }
-                        } value={text} onChange={(e) => setText(e.target.value)} placeholder='Профессия, должность или компания' type='text' />
-                        <button onClick={() => getVacancies(text)}>Найти</button>
+                        } value={userInput} onChange={(e) => setUserInput(e.target.value)} placeholder='Профессия, должность или компания' type='text' />
+                        <button onClick={() => setSearchText(userInput)}>Найти</button>
                     </div>
                 </div>
             </div>
